@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftShip | Courier Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">S</div>
+            <div>
+                <h2>SwiftShip</h2>
+                <span>Courier Management</span>
+            </div>
+        </div>
+
+        <div class="menu-label">MAIN MENU</div>
+
+        <nav>
+            <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                <span>▦</span> Dashboard
+            </a>
+            <a href="#addCourier" class="nav-link" data-section="addCourier">
+                <span>＋</span> Add Courier
+            </a>
+            <a href="#couriers" class="nav-link" data-section="couriers">
+                <span>▤</span> Courier Records
+            </a>
+            <a href="#tracking" class="nav-link" data-section="tracking">
+                <span>⌖</span> Track Shipment
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-card">
+                <div class="help-icon">✦</div>
+                <h3>Need Help?</h3>
+                <p>Manage your deliveries with ease.</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="avatar">AD</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <small>System Manager</small>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="welcome">Welcome back, Administrator 👋</p>
+                <h1 id="pageTitle">Dashboard Overview</h1>
+            </div>
+
+            <div class="top-actions">
+                <div class="date-display" id="currentDate"></div>
+                <div class="top-avatar">AD</div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="page-section active">
+
+            <div class="hero-banner">
+                <div>
+                    <span class="hero-tag">COURIER CONTROL CENTER</span>
+                    <h2>Delivering Excellence,<br>One Parcel at a Time.</h2>
+                    <p>Manage shipments, monitor deliveries and keep everything moving.</p>
+                    <button class="hero-btn" onclick="showSection('addCourier')">
+                        + Create New Shipment
+                    </button>
+                </div>
+                <div class="hero-art">📦</div>
+            </div>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Performance Overview</h2>
+                    <p>Here is what's happening with your shipments.</p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Total Shipments</span>
+                        <div class="stat-icon purple">📦</div>
+                    </div>
+                    <h2 id="totalCount">0</h2>
+                    <small>All registered shipments</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Delivered</span>
+                        <div class="stat-icon green">✓</div>
+                    </div>
+                    <h2 id="deliveredCount">0</h2>
+                    <small>Successfully delivered</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>In Transit</span>
+                        <div class="stat-icon blue">🚚</div>
+                    </div>
+                    <h2 id="transitCount">0</h2>
+                    <small>Currently on the way</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Pending</span>
+                        <div class="stat-icon orange">◷</div>
+                    </div>
+                    <h2 id="pendingCount">0</h2>
+                    <small>Waiting for processing</small>
+                </div>
+            </div>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Recent Shipments</h2>
+                    <p>Latest courier activity.</p>
+                </div>
+                <button class="secondary-btn" onclick="showSection('couriers')">
+                    View All →
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tracking ID</th>
+                            <th>Receiver</th>
+                            <th>Destination</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentTable"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- ADD COURIER -->
+        <section id="addCourier" class="page-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Register New Shipment</h2>
+                    <p>Enter sender, receiver and parcel information.</p>
+                </div>
+            </div>
+
+            <form id="courierForm" class="form-card">
+
+                <h3>Sender Information</h3>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Sender Name *</label>
+                        <input type="text" id="senderName" placeholder="Enter sender name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sender Phone *</label>
+                        <input type="tel" id="senderPhone" placeholder="03XXXXXXXXX" required pattern="[0-9+\-\s]{7,15}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Sender Address *</label>
+                    <textarea id="senderAddress" placeholder="Enter sender address" required></textarea>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <h3>Receiver Information</h3>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Receiver Name *</label>
+                        <input type="text" id="receiverName" placeholder="Enter receiver name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Receiver Phone *</label>
+                        <input type="tel" id="receiverPhone" placeholder="03XXXXXXXXX" required pattern="[0-9+\-\s]{7,15}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Delivery Address *</label>
+                    <textarea id="receiverAddress" placeholder="Enter complete delivery address" required></textarea>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <h3>Parcel Information</h3>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Parcel Type *</label>
+                        <select id="parcelType" required>
+                            <option value="">Select parcel type</option>
+                            <option>Documents</option>
+                            <option>Electronics</option>
+                            <option>Clothing</option>
+                            <option>Food Items</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Parcel Weight (kg) *</label>
+                        <input type="number" id="weight" min="0.1" step="0.1" placeholder="e.g. 2.5" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Delivery Charges (PKR) *</label>
+                        <input type="number" id="charges" min="0" placeholder="e.g. 500" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Initial Status</label>
+                        <select id="status">
+                            <option>Booked</option>
+                            <option>Picked Up</option>
+                            <option>In Transit</option>
+                            <option>Out for Delivery</option>
+                            <option>Delivered</option>
+                            <option>Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="reset" class="cancel-btn">Clear Form</button>
+                    <button type="submit" class="primary-btn">Create Shipment →</button>
+                </div>
+
+            </form>
+        </section>
+
+        <!-- COURIER RECORDS -->
+        <section id="couriers" class="page-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>All Courier Records</h2>
+                    <p>Manage and monitor all registered shipments.</p>
+                </div>
+                <button class="primary-btn" onclick="showSection('addCourier')">
+                    + Add Courier
+                </button>
+            </div>
+
+            <div class="filter-bar">
+                <input type="text" id="searchInput" placeholder="Search tracking ID, name or destination...">
+
+                <select id="filterStatus">
+                    <option value="All">All Statuses</option>
+                    <option>Booked</option>
+                    <option>Picked Up</option>
+                    <option>In Transit</option>
+                    <option>Out for Delivery</option>
+                    <option>Delivered</option>
+                    <option>Cancelled</option>
+                </select>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tracking ID</th>
+                            <th>Sender</th>
+                            <th>Receiver</th>
+                            <th>Destination</th>
+                            <th>Charges</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courierTable"></tbody>
+                </table>
+            </div>
+
+            <p id="recordCount" class="record-count"></p>
+        </section>
+
+        <!-- TRACKING -->
+        <section id="tracking" class="page-section">
+
+            <div class="tracking-banner">
+                <div class="tracking-icon">📍</div>
+                <h2>Track Your Shipment</h2>
+                <p>Enter your tracking ID to check your parcel's current status.</p>
+
+                <div class="tracking-search">
+                    <input type="text" id="trackingInput" placeholder="Enter Tracking ID (e.g. SW123456)">
+                    <button class="primary-btn" onclick="trackCourier()">Track Now</button>
+                </div>
+            </div>
+
+            <div id="trackingResult"></div>
+
+        </section>
+
+        <footer>
+            © 2026 SwiftShip Courier Management System.
+            <span>Designed for efficient delivery management.</span>
+        </footer>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
